@@ -3,7 +3,7 @@ This is a project to pratice some skills in React, i using React and pure CSS i 
 
 
 # Main page Image
-![Main page](https://github.com/Nicholas-nops/MyBooks/blob/master/mp.PNG)
+![Main page](https://github.com/Nicholas-nops/MyBooks/blob/main/mp.PNG)
 
 
 
