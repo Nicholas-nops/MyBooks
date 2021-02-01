@@ -1,0 +1,45 @@
+.container {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    background-color:transparent;
+    
+}
+body{
+    width: 100%;
+    height: 100%;
+}
+.header {
+    background-color:rgba(0, 0, 0, 0.5);
+    margin-bottom: -15px;
+}
+img {
+    margin-top: 5px;
+    border-radius: 8px;
+    text-align: left;
+}
+.btn{
+    border-radius: 8px;
+    background-color: rgb(139,69,19);
+    color: white;
+    font-family: 'Times New Roman', Times, serif;
+    height: 5vh;
+    width: 20vh;
+    border-color:rgb(139,69,19);
+    margin-right: 5px;
+    margin-top: 5px;
+}
+.buttons {
+    display: inline-block;
+    letter-spacing: 5px;
+}
+
+@media (max-width: 768px){
+    .buttons {
+        display: inline-block;
+        letter-spacing: 5px;
+        display: grid;
+        justify-content: center;
+    }
+}
