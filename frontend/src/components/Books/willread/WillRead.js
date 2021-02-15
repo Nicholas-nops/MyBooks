@@ -13,46 +13,15 @@ export default function WillRead() {
     const [bookTitle, setTtile] = useState('');
     const [bookDesc, setDesc] = useState('');
 
-    function handleForm(e) {
-        e.preventDefault();
-        if (e.target.bookCover !== "" && e.target.bookTitle.value !== "" && e.target.bookDesc.value !== "") {
-            setCover(encode(e.target.bookCover.files));
-            setTtile(e.target.bookTitle.value);
-            setDesc(e.target.bookDesc.value);
-            //console.log(bookCover)
-            handleUpload();
+    const handleUpload = () => {
+
+        let bookData = {
+            "bookCover": bookCover,
+            "bookTitle": bookTitle,
+            "bookDesc": bookDesc
         }
+        axios.post('http://localhost:3002/api/insert', bookData)
     }
-    function handleUpload() {
-
-        /*         let bookData = {
-                    "bookCover": bookCover,
-                    "bookTitle": bookTitle,
-                    "bookDesc": bookDesc
-                } */
-         let bookData = {
-            "bookData": [
-                { "bookCover": bookCover },
-                { "bookTitle": bookTitle },
-                { "bookDesc": bookDesc }
-            ]
-        } 
-        const headers = { 'Content-Type': 'application/json' }
-
-        let formData = new FormData();
-        formData.append("bookCover", bookCover);
-        formData.append("bookTitle", bookTitle);
-        formData.append("bookDesc", bookDesc);
-
-        const url = "http://localhost:80/react-backend/index.php"
-        axios.post(url,
-            bookData,
-            {headers: headers}
-        )
-            .then(res => console.log(res))
-            .catch(err => console.log(err));
-    }
-
     return (
         <div className='body'>
             <div className="formdiv3">
@@ -62,13 +31,11 @@ export default function WillRead() {
                     modal ?
                         <div className='modalBody'>
                             <div className="modal-content">
-                                <form onSubmit={handleForm}>
-                                    Book cover: <input placeholder="Book ISBN" type="file" id="bookCover" className="modal__book_cover" />
-                                    <input placeholder="Book Title" type="text" id="bookTitle" className="modal__book__title" />
-                                    <input placeholder="Short description" id="bookDesc" type="text" className="modal__book__description" />
-                                    <input className='btnSend' type="submit" value="add" />
-                                    <button className='btnClose' onClick={() => (showModal(false))}>Cancel</button>
-                                </form>
+                                Book cover: <input placeholder="Book ISBN" onChange={(e) =>  setCover(encode(e.target.files))} type="file" id="bookCover" className="modal__book_cover" />
+                                <input placeholder="Book Title" onChange={(e) =>  setTtile(e.target.value)}type="text" id="bookTitle" className="modal__book__title" />
+                                <input placeholder="Short description" onChange={(e) => setDesc(e.target.value)}id="bookDesc" type="text" className="modal__book__description" />
+                                <input className='btnSend' onClick={handleUpload} type="submit" value="add" />
+                                <button className='btnClose' onClick={() => (showModal(false))}>Cancel</button>
                             </div>
                         </div>
                         :
