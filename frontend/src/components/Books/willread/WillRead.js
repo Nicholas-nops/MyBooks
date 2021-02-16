@@ -3,8 +3,9 @@ import './willread.css';
 import 'material-icons';
 import 'materialize-css'
 import Card from '../../card/card';
+import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
-import { encode } from 'base-64';
+import { storage } from '../../../firebase/firebase';
 
 
 export default function WillRead() {
@@ -12,15 +13,34 @@ export default function WillRead() {
     const [bookCover, setCover] = useState('');
     const [bookTitle, setTtile] = useState('');
     const [bookDesc, setDesc] = useState('');
-
     const handleUpload = () => {
+        let imgID = uuidv4();
 
-        let bookData = {
-            "bookCover": bookCover,
-            "bookTitle": bookTitle,
-            "bookDesc": bookDesc
-        }
-        axios.post('http://localhost:3002/api/insert', bookData)
+        const uploadTask = storage.ref(`images/${imgID}`).put(bookCover);
+        uploadTask.on(
+            'state_changed',
+            snapshot => {},
+            error => {
+                console.log(error);
+            },
+            () => {
+                storage
+                .ref('images')
+                .child(bookCover.name)
+                .getDownloadURL()
+                .then(url => {
+                    console.log(url);
+                })  
+            }
+            );
+
+        console.log(bookCover)
+        /*    let bookData = {
+               "bookCover": bookCover,
+               "bookTitle": bookTitle,
+               "bookDesc": bookDesc
+           }
+           axios.post('http://localhost:3002/api/insert', bookData) */
     }
     return (
         <div className='body'>
@@ -31,9 +51,9 @@ export default function WillRead() {
                     modal ?
                         <div className='modalBody'>
                             <div className="modal-content">
-                                Book cover: <input placeholder="Book ISBN" onChange={(e) =>  setCover(encode(e.target.files))} type="file" id="bookCover" className="modal__book_cover" />
-                                <input placeholder="Book Title" onChange={(e) =>  setTtile(e.target.value)}type="text" id="bookTitle" className="modal__book__title" />
-                                <input placeholder="Short description" onChange={(e) => setDesc(e.target.value)}id="bookDesc" type="text" className="modal__book__description" />
+                                Book cover: <input placeholder="Book ISBN" onChange={(e) => setCover(e.target.files[0])} type="file" id="bookCover" className="modal__book_cover" />
+                                <input placeholder="Book Title" onChange={(e) => setTtile(e.target.value)} type="text" id="bookTitle" className="modal__book__title" />
+                                <input placeholder="Short description" onChange={(e) => setDesc(e.target.value)} id="bookDesc" type="text" className="modal__book__description" />
                                 <input className='btnSend' onClick={handleUpload} type="submit" value="add" />
                                 <button className='btnClose' onClick={() => (showModal(false))}>Cancel</button>
                             </div>
