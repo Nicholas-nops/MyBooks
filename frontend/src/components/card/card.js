@@ -10,11 +10,6 @@ export default function Card() {
     useEffect(() => {
         axios.get('http://localhost:3002/api/get').then(res => {
             setBookList(res.data);
-            for (let x = 0; x < x.length; x++) {
-                const element = x[x];
-                
-            }
-           
         })
     }, [bookList])
 
@@ -24,7 +19,7 @@ export default function Card() {
             {bookList.map((book) => {
                 return (
                     <div className="card">
-                        <img src={capa} alt="capa" style={style.img}></img>
+                        <img src={book.bookCover} alt="capa" style={style.img}></img>
                         <div className="container">
                             <h4><b>{book.bookTItle}</b></h4>
                             <p>{book.bookDesc}</p>

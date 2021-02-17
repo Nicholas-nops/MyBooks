@@ -13,8 +13,11 @@ export default function WillRead() {
     const [bookCover, setCover] = useState('');
     const [bookTitle, setTtile] = useState('');
     const [bookDesc, setDesc] = useState('');
-    const handleUpload = () => {
+    const [bookUrl,setUrl] = useState('');
+
+    const handleUpload = async () => {
         let imgID = uuidv4();
+
 
         const uploadTask = storage.ref(`images/${imgID}`).put(bookCover);
         uploadTask.on(
@@ -26,21 +29,21 @@ export default function WillRead() {
             () => {
                 storage
                 .ref('images')
-                .child(bookCover.name)
+                .child(imgID)
                 .getDownloadURL()
                 .then(url => {
-                    console.log(url);
+                    setUrl(url);
+                    console.log(bookUrl);
                 })  
             }
             );
 
-        console.log(bookCover)
-        /*    let bookData = {
-               "bookCover": bookCover,
+          let bookData = {
+               "bookCover": await bookUrl,
                "bookTitle": bookTitle,
-               "bookDesc": bookDesc
+               "bookDesc": bookDesc,
            }
-           axios.post('http://localhost:3002/api/insert', bookData) */
+           axios.post('http://localhost:3002/api/insert', bookData) 
     }
     return (
         <div className='body'>

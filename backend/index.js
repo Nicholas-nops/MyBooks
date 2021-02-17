@@ -34,7 +34,7 @@ app.post('/api/insert',(req,res) => {
         if(err){
             console.log(err);
         }else{
-            console.log(result);
+            console.log('texto' + req.body.bookCover);
         }
     })
 
