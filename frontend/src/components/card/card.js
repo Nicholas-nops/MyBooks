@@ -12,7 +12,7 @@ export default function Card() {
         axios.get('http://localhost:3002/api/get').then(res => {
             setBookList(res.data);
         })
-    }, [])
+    }, [bookList])
 
     return (
 
@@ -21,7 +21,7 @@ export default function Card() {
                 return (
                     <div className="card">
                         <img src={book.bookCover} alt="capa" style={style.img}></img>
-                        <div className="container">
+                       
                             <h4><b>{book.bookTitle}</b></h4>
                             <p>{book.bookDesc}</p>
                             <div>
@@ -30,7 +30,7 @@ export default function Card() {
                             <div>
                             <button className='btnDelete'>Delete <span className=""><img src={removeIcon}></img></span></button>
                             </div>
-                        </div>
+          
                     </div>
                 )
             })}

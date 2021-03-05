@@ -18,9 +18,12 @@ export default function WillRead() {
 
     const handleImg = () => {
         let imgID = uuidv4();
+        console.log(bookCover,bookTitle,bookDesc)
 
-        if (bookCover !== '' && bookTitle !== '' && bookDesc !== '') {
-            const uploadTask = storage.ref(`images/${imgID}`).put(bookCover);
+        if (bookCover === "" && bookTitle === "" && bookDesc === "") {
+            alert("Some of the fields are empty");
+    }else {
+        const uploadTask = storage.ref(`images/${imgID}`).put(bookCover);
             uploadTask.on(
                 'state_changed',
                 snapshot => { },
