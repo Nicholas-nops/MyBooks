@@ -53,11 +53,11 @@ export default function WillRead() {
             <button className="modal__open__button" onClick={() => (showModal(modal ? false : true))} ><span className="material-icons btn3">library_add</span></button>
             {
                 modal ?
-                    <div c  lassName='modal__body'>
+                    <div className='modal__body'>
                         <div className="modal__content">
                             Book cover: <input placeholder="Book ISBN" onChange={(e) => setCover(e.target.files[0])} type="file" id="bookCover" className="modal__book__cover" />
                             <input placeholder="Book Title" onChange={(e) => setTtile(e.target.value)} type="text" id="bookTitle" className="modal__book__title" />
-                            <input placeholder="Short description" onChange={(e) => setDesc(e.target.value)} id="bookDesc" type="text" className="modal__book__description" />
+                            <textarea placeholder="Short description" onChange={(e) => setDesc(e.target.value)} id="bookDesc" type="text" className="modal__book__description"></textarea>
                             <input className='modal__btn__send' onClick={handleImg} type="submit" value="add" />
                             <button className='modal__btn_close' onClick={() => (showModal(false))}>Cancel</button>
                         </div>

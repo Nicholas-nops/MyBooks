@@ -8,8 +8,8 @@ const bodyParser = require('body-parser');
 
 const db = mysql.createPool({
     host: 'localhost',
-    user: 'root',
-    password: 'password',
+    user: 'nicholasnop',
+    password: '123',
     database: 'mybooks'
 })
 

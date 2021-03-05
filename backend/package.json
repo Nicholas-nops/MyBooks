@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "MyBooks - backend",
   "main": "index.js",
-  "scripts": {    
+  "scripts": {
     "start": "node index.js",
     "npmStart": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import capa from './capa.jpg'
+import addIcon from '../../img/libraryadd.svg'
+import removeIcon from '../../img/removeIcon.svg'
 import './card.css'
 
 export default function Card() {
@@ -21,8 +22,14 @@ export default function Card() {
                     <div className="card">
                         <img src={book.bookCover} alt="capa" style={style.img}></img>
                         <div className="container">
-                            <h4><b>{book.bookTItle}</b></h4>
+                            <h4><b>{book.bookTitle}</b></h4>
                             <p>{book.bookDesc}</p>
+                            <div>
+                            <button className='btnReaded'>Alredy read <span className=""><img src={addIcon}></img></span></button>
+                            </div>
+                            <div>
+                            <button className='btnDelete'>Delete <span className=""><img src={removeIcon}></img></span></button>
+                            </div>
                         </div>
                     </div>
                 )
