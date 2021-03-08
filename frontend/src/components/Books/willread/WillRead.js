@@ -1,27 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import './willread.css';
 import 'material-icons';
 import 'materialize-css'
 import Card from '../../card/card';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
-import { storage } from '../../../firebase/firebase';
-
+import { storage,ref } from '../../../firebase/firebase';
 
 export default function WillRead() {
     const [modal, showModal] = useState(false);
-    const [bookCover, setCover] = useState('');
+    const [bookCover, setCover] = useState(null);
     const [bookTitle, setTtile] = useState('');
     const [bookDesc, setDesc] = useState('');
     const [bookUrl, setUrl] = useState('');
-
-
+    
+    useEffect(() => {
+        
+  
+    }, [bookUrl,bookCover])
     const handleImg = () => {
         let imgID = uuidv4();
-        console.log(bookCover,bookTitle,bookDesc)
 
-        if (bookCover === "" && bookTitle === "" && bookDesc === "") {
-            alert("Some of the fields are empty");
+    if (bookCover === "" && bookTitle === "" && bookDesc === "") {
+
+        alert("Some of the fields are empty");
     }else {
         const uploadTask = storage.ref(`images/${imgID}`).put(bookCover);
             uploadTask.on(
@@ -35,21 +37,25 @@ export default function WillRead() {
                         .ref('images')
                         .child(imgID)
                         .getDownloadURL()
-                        .then(url => {
-                            setUrl(url);
-                            console.log(bookUrl);
+                        .then( url => {
+                            setUrl(url)
                         })
                 }
+                
             );
-            let bookData = {
-                "bookCover": bookUrl,
-                "bookTitle": bookTitle,
-                "bookDesc": bookDesc,
-            }
-            axios.post('http://localhost:3002/api/insert', bookData)
+            
         }
-    }
+            handleUpload();
+        }    
 
+    const handleUpload = async () => { 
+        let bookData = {
+            "bookCover": bookUrl,
+            "bookTitle": bookTitle,
+            "bookDesc": bookDesc,
+        }
+        axios.post('http://localhost:3002/api/insert', bookData)
+    }
     return (
         <div className='modal__container'>
             <Card />
@@ -58,11 +64,12 @@ export default function WillRead() {
                 modal ?
                     <div className='modal__body'>
                         <div className="modal__content">
-                            Book cover: <input placeholder="Book ISBN" onChange={(e) => setCover(e.target.files[0])} type="file" id="bookCover" className="modal__book__cover" />
+                            Book cover: <input placeholder="Book ISBN" onChange={(e) =>  setCover(e.target.files[0])} type="file"/>
                             <input placeholder="Book Title" onChange={(e) => setTtile(e.target.value)} type="text" id="bookTitle" className="modal__book__title" />
                             <textarea placeholder="Short description" onChange={(e) => setDesc(e.target.value)} id="bookDesc" type="text" className="modal__book__description"></textarea>
                             <input className='modal__btn__send' onClick={handleImg} type="submit" value="add" />
                             <button className='modal__btn_close' onClick={() => (showModal(false))}>Cancel</button>
+                            {bookUrl}
                         </div>
                     </div>
                     :

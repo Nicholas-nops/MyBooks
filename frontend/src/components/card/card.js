@@ -12,7 +12,7 @@ export default function Card() {
         axios.get('http://localhost:3002/api/get').then(res => {
             setBookList(res.data);
         })
-    }, [bookList])
+    }, [])
 
     return (
 
