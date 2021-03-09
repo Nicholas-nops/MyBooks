@@ -6,7 +6,6 @@ import './card.css'
 
 export default function Card() {
     const [bookList, setBookList] = useState([]);
-    const books = [];
 
     useEffect(() => {
         axios.get('http://localhost:3002/api/get').then(res => {
@@ -19,16 +18,16 @@ export default function Card() {
         <div>
             {bookList.map((book) => {
                 return (
-                    <div className="card">
+                    <div className="card" key={book.ID}>
                         <img src={book.bookCover} alt="capa" style={style.img}></img>
                        
                             <h4><b>{book.bookTitle}</b></h4>
                             <p>{book.bookDesc}</p>
                             <div>
-                            <button className='btnReaded'>Alredy read <span className=""><img src={addIcon}></img></span></button>
+                            <button className='btnReaded'>Alredy read <span className=""><img alt="add" src={addIcon}></img></span></button>
                             </div>
                             <div>
-                            <button className='btnDelete'>Delete <span className=""><img src={removeIcon}></img></span></button>
+                            <button className='btnDelete'>Delete <span className=""><img alt="add" src={removeIcon}></img></span></button>
                             </div>
           
                     </div>
