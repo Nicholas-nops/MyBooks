@@ -46,7 +46,7 @@ export default function WillRead() {
 
   return (
     <div className="modal__container">
-      <Card />
+      <Card bookStatus={"Alredy read"} />
       <button
         className="modal__open__button"
         onClick={() => showModal(modal ? false : true)}
