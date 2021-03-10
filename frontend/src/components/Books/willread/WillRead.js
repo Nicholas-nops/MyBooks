@@ -6,6 +6,7 @@ import Card from "../../card/card";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import { storage } from "../../../firebase/firebase";
+import * as api from "../../../axiosApi/apiService";
 
 export default function WillRead() {
   const [modal, showModal] = useState(false);
@@ -37,7 +38,7 @@ export default function WillRead() {
                 bookTitle: bookTitle,
                 bookDesc: bookDesc,
               };
-              axios.post("http://localhost:3002/api/insert", bookData);
+              api.insertBook(bookData);
             });
         }
       );
@@ -46,7 +47,7 @@ export default function WillRead() {
 
   return (
     <div className="modal__container">
-      <Card bookStatus={"Alredy read"} />
+      <Card bookStatus={"Alredy read"} bookFilter={"willRead"} />
       <button
         className="modal__open__button"
         onClick={() => showModal(modal ? false : true)}

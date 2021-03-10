@@ -3,8 +3,9 @@ import axios from "axios";
 import addIcon from "../../img/libraryadd.svg";
 import removeIcon from "../../img/removeIcon.svg";
 import "./card.css";
+import * as api from "../../axiosApi/apiService";
 
-export default function Card({ bookStatus }) {
+export default function Card({ bookStatus, bookFilter }) {
   const [bookList, setBookList] = useState([]);
 
   const attStatus = (e) => {
@@ -13,19 +14,23 @@ export default function Card({ bookStatus }) {
       bookID: e.target.id,
       bookStatus: "Alredyread",
     };
-
     axios.post("http://localhost:3002/api/status", bookData);
   };
 
   const removeBook = (e) => {
-    const bookID = e.target.id;
+    const bookID = {
+      bookID: e.target.id,
+    };
+    console.log(bookID);
     axios.post("http://localhost:3002/api/remove", bookID);
   };
   useEffect(() => {
     axios.get("http://localhost:3002/api/get").then((res) => {
-      setBookList(res.data);
+      setBookList(api.getBooks(bookFilter));
+      console.log(bookList);
     });
-  }, [bookList]);
+    console.log();
+  }, []);
 
   return (
     <div>

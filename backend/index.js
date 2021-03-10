@@ -61,8 +61,8 @@ app.post("/api/status", (req, res) => {
 
 app.post("/api/remove", (req, res) => {
   const bookID = req.body.bookID;
-
-  qDelete = "DELETE FROM books * WHERE ID='" + bookID + "'";
+  console.log(bookID);
+  const qDelete = "DELETE FROM books WHERE ID='" + bookID + "'";
   db.query(qDelete, (err, result) => {
     if (err) {
       console.log(err);
